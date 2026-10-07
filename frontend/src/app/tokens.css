@@ -1,5 +1,5 @@
 :root {
-  --font-body: "Amazon Ember", "Helvetica Neue", Roboto, Arial, sans-serif;
+  --font-body: "Amazon Ember", var(--font-open-sans), "Open Sans", "Helvetica Neue", Roboto, Arial, sans-serif;
   --font-mono: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
 
   --color-bg-page: #f2f3f3;

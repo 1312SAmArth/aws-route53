@@ -35,6 +35,7 @@ const columns: Column<DnsRecord>[] = [
   { id: "differentiator", header: "Differentiator", cell: (r) => (r.set_identifier ? `${r.set_identifier} (weight ${r.weight})` : "–"), width: "170px" },
   { id: "alias", header: "Alias", cell: (r) => (r.alias_target ? "Yes" : "No"), width: "70px" },
   { id: "value", header: "Value / route traffic to", cell: (r) => <RecordValues record={r} /> },
+  { id: "health", header: "Evaluate target health", cell: (r) => (r.alias_target ? (r.evaluate_target_health ? "Yes" : "No") : "–"), width: "160px" },
   { id: "ttl", header: "TTL (seconds)", cell: (r) => r.ttl ?? "–", width: "120px", align: "right" },
 ];
 
@@ -131,7 +132,7 @@ export function RecordsPanel({ zone }: { zone: HostedZone }) {
             <SearchInput
               value={search}
               onChange={(value) => changeList({ search: value })}
-              placeholder="Filter records by name or value"
+              placeholder="Filter records by property or value"
               ariaLabel="Filter records"
             />
           </div>

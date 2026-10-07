@@ -149,7 +149,7 @@ export default function HostedZonesPage() {
             <SearchInput
               value={search}
               onChange={(value) => setList({ search: value })}
-              placeholder="Filter hosted zones by name, description or ID"
+              placeholder="Filter hosted zones by property or value"
               ariaLabel="Filter hosted zones"
             />
           </div>

@@ -11,17 +11,26 @@ interface NavItem {
   icon: IconName;
 }
 
-const SECTIONS: NavItem[][] = [
-  [{ href: "/dashboard", label: "Dashboard", icon: "dashboard" }],
-  [
-    { href: "/hosted-zones", label: "Hosted zones", icon: "zones" },
-    { href: "/health-checks", label: "Health checks", icon: "health" },
-  ],
-  [{ href: "/traffic-policies", label: "Traffic policies", icon: "traffic" }],
-  [
-    { href: "/resolver", label: "Resolver", icon: "resolver" },
-    { href: "/profiles", label: "Profiles", icon: "profiles" },
-  ],
+interface NavSection {
+  heading?: string;
+  items: NavItem[];
+}
+
+const SECTIONS: NavSection[] = [
+  { items: [{ href: "/dashboard", label: "Dashboard", icon: "dashboard" }] },
+  {
+    items: [
+      { href: "/hosted-zones", label: "Hosted zones", icon: "zones" },
+      { href: "/health-checks", label: "Health checks", icon: "health" },
+    ],
+  },
+  { heading: "Traffic flow", items: [{ href: "/traffic-policies", label: "Traffic policies", icon: "traffic" }] },
+  {
+    items: [
+      { href: "/resolver", label: "Resolver", icon: "resolver" },
+      { href: "/profiles", label: "Profiles", icon: "profiles" },
+    ],
+  },
 ];
 
 interface SidebarProps {
@@ -49,8 +58,9 @@ export function Sidebar({ collapsed, drawerOpen, onNavigate, onCloseDrawer }: Si
         </div>
         <nav>
           {SECTIONS.map((section, i) => (
-            <ul key={i} className={styles.section}>
-              {section.map((item) => {
+            <ul key={i} className={styles.section} aria-label={section.heading}>
+              {section.heading && <li className={styles.heading}>{section.heading}</li>}
+              {section.items.map((item) => {
                 const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
                 return (
                   <li key={item.href}>
