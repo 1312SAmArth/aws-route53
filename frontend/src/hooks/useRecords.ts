@@ -2,13 +2,15 @@
 
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api, buildQuery } from "@/lib/api-client";
-import type { DnsRecord, Page, RecordInput, RecordType } from "@/lib/types";
+import type { DnsRecord, Page, RecordInput, RecordType, RoutingPolicy } from "@/lib/types";
 
 export interface RecordListParams {
   page: number;
   pageSize: number;
   search: string;
   type: RecordType | "";
+  policy: RoutingPolicy | "";
+  alias: "true" | "false" | "";
 }
 
 export function useRecords(zoneId: string, params: RecordListParams) {
@@ -16,7 +18,7 @@ export function useRecords(zoneId: string, params: RecordListParams) {
     queryKey: ["records", zoneId, params],
     queryFn: ({ signal }) =>
       api<Page<DnsRecord>>(
-        `/hosted-zones/${zoneId}/records${buildQuery({ page: params.page, page_size: params.pageSize, search: params.search, type: params.type })}`,
+        `/hosted-zones/${zoneId}/records${buildQuery({ page: params.page, page_size: params.pageSize, search: params.search, type: params.type, routing_policy: params.policy, alias: params.alias })}`,
         { signal },
       ),
     placeholderData: keepPreviousData,

@@ -6,6 +6,7 @@ import { Button, LinkButton } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { Container } from "@/components/ui/Container";
 import { DataTable, type Column } from "@/components/ui/DataTable";
+import { InfoLink } from "@/components/ui/InfoLink";
 import { Select } from "@/components/ui/Inputs";
 import { Pagination } from "@/components/ui/Pagination";
 import { SearchInput } from "@/components/ui/SearchInput";
@@ -15,7 +16,7 @@ import { useListParams } from "@/hooks/useListParams";
 import { useDeleteRecords, useRecords } from "@/hooks/useRecords";
 import { ApiError } from "@/lib/api-client";
 import { displayName, plural } from "@/lib/format";
-import { RECORD_TYPES, type DnsRecord, type HostedZone, type RecordType } from "@/lib/types";
+import { RECORD_TYPES, type DnsRecord, type HostedZone, type RecordType, type RoutingPolicy } from "@/lib/types";
 import { ImportZoneFileDialog } from "./ImportZoneFileDialog";
 import { RecordDetails } from "./RecordDetails";
 import { RecordValues } from "./RecordValues";
@@ -24,28 +25,25 @@ import styles from "./RecordsPanel.module.css";
 const PAGE_SIZE = 10;
 
 const columns: Column<DnsRecord>[] = [
-  {
-    id: "name",
-    header: "Record name",
-    cell: (r) => <span className={styles.name}>{displayName(r.name)}</span>,
-    width: "220px",
-  },
+  { id: "name", header: "Record name", cell: (r) => <span className={styles.name}>{displayName(r.name)}</span>, width: "220px" },
   { id: "type", header: "Type", cell: (r) => r.type, width: "80px" },
   { id: "policy", header: "Routing policy", cell: (r) => (r.routing_policy === "WEIGHTED" ? "Weighted" : "Simple"), width: "130px" },
   { id: "differentiator", header: "Differentiator", cell: (r) => (r.set_identifier ? `${r.set_identifier} (weight ${r.weight})` : "–"), width: "170px" },
   { id: "alias", header: "Alias", cell: (r) => (r.alias_target ? "Yes" : "No"), width: "70px" },
-  { id: "value", header: "Value / route traffic to", cell: (r) => <RecordValues record={r} /> },
-  { id: "health", header: "Evaluate target health", cell: (r) => (r.alias_target ? (r.evaluate_target_health ? "Yes" : "No") : "–"), width: "160px" },
+  { id: "value", header: "Value/route traffic to", cell: (r) => <RecordValues record={r} /> },
   { id: "ttl", header: "TTL (seconds)", cell: (r) => r.ttl ?? "–", width: "120px", align: "right" },
+  { id: "health", header: "Evaluate target health", cell: (r) => (r.alias_target ? (r.evaluate_target_health ? "Yes" : "No") : "–"), width: "160px" },
 ];
 
 export function RecordsPanel({ zone }: { zone: HostedZone }) {
   const router = useRouter();
   const flash = useFlash();
-  const [{ page, search, type }, setList] = useListParams();
+  const [{ page, search, type, policy, alias }, setList] = useListParams();
   const recordType = (RECORD_TYPES as readonly string[]).includes(type) ? (type as RecordType) : "";
+  const routingPolicy: RoutingPolicy | "" = policy === "SIMPLE" || policy === "WEIGHTED" ? policy : "";
+  const aliasFilter = alias === "true" || alias === "false" ? alias : "";
 
-  const records = useRecords(zone.id, { page, pageSize: PAGE_SIZE, search, type: recordType });
+  const records = useRecords(zone.id, { page, pageSize: PAGE_SIZE, search, type: recordType, policy: routingPolicy, alias: aliasFilter });
   const deleteRecords = useDeleteRecords(zone.id);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
@@ -57,7 +55,7 @@ export function RecordsPanel({ zone }: { zone: HostedZone }) {
   const selected = items.filter((r) => selectedIds.includes(String(r.id)));
   const single = selected.length === 1 ? selected[0] : undefined;
   const hasSystem = selected.some((r) => r.is_system);
-  const filtered = search !== "" || recordType !== "";
+  const filtered = search !== "" || recordType !== "" || routingPolicy !== "" || aliasFilter !== "";
 
   const overshoot = records.data !== undefined && page > pageCount;
   useEffect(() => {
@@ -86,7 +84,7 @@ export function RecordsPanel({ zone }: { zone: HostedZone }) {
     <EmptyState
       title="No matching records"
       description="No records match your filter. Try a different search term or record type."
-      action={<Button onClick={() => changeList({ search: "", type: "" })}>Clear filter</Button>}
+      action={<Button onClick={() => changeList({ search: "", type: "", policy: "", alias: "" })}>Clear filter</Button>}
     />
   ) : (
     <EmptyState
@@ -109,18 +107,23 @@ export function RecordsPanel({ zone }: { zone: HostedZone }) {
         id="records"
         title="Records"
         count={records.data ? total : undefined}
-        description="Records define how traffic is routed for this domain and its subdomains."
+        info={
+          <InfoLink title="Records">
+            <p>Records define how you want to route traffic for the domain and its subdomains. Each record has a name, a type, and one or more values.</p>
+            <p>Select a record to see its details. Select several records to delete them together.</p>
+          </InfoLink>
+        }
         flush
         actions={
           <>
             <Button variant="icon" icon="refresh" aria-label="Refresh records" onClick={() => records.refetch()} disabled={records.isFetching} />
-            <Button disabled={!single} onClick={() => single && router.push(`/hosted-zones/${zone.id}/records/${single.id}/edit`)}>
-              Edit record
-            </Button>
             <Button disabled={selected.length === 0 || hasSystem} onClick={() => setConfirmingDelete(true)}>
               Delete {selected.length > 1 ? "records" : "record"}
             </Button>
             <Button onClick={() => setImporting(true)}>Import zone file</Button>
+            <Button disabled={!single} onClick={() => single && router.push(`/hosted-zones/${zone.id}/records/${single.id}/edit`)}>
+              Edit record
+            </Button>
             <LinkButton href={`/hosted-zones/${zone.id}/records/new`} variant="primary">
               Create record
             </LinkButton>
@@ -137,13 +140,27 @@ export function RecordsPanel({ zone }: { zone: HostedZone }) {
             />
           </div>
           <div className={styles.typeFilter}>
-            <Select aria-label="Filter by record type" value={recordType} onChange={(e) => changeList({ type: e.target.value })}>
-              <option value="">All types</option>
+            <Select aria-label="Type" value={recordType} onChange={(e) => changeList({ type: e.target.value })}>
+              <option value="">Type: all</option>
               {RECORD_TYPES.map((t) => (
                 <option key={t} value={t}>
                   {t}
                 </option>
               ))}
+            </Select>
+          </div>
+          <div className={styles.typeFilter}>
+            <Select aria-label="Routing policy" value={routingPolicy} onChange={(e) => changeList({ policy: e.target.value })}>
+              <option value="">Routing policy: all</option>
+              <option value="SIMPLE">Simple</option>
+              <option value="WEIGHTED">Weighted</option>
+            </Select>
+          </div>
+          <div className={styles.typeFilter}>
+            <Select aria-label="Alias" value={aliasFilter} onChange={(e) => changeList({ alias: e.target.value })}>
+              <option value="">Alias: all</option>
+              <option value="true">Alias</option>
+              <option value="false">Not alias</option>
             </Select>
           </div>
           <div className={styles.pager}>

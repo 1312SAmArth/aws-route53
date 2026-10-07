@@ -74,7 +74,7 @@ route53-clone/
 │   │   ├── models/              user, session, hosted_zone, record
 │   │   ├── schemas/             Pydantic request/response models
 │   │   └── services/            auth, hosted_zone, record, dns_validation, zone_file (BIND/JSON)
-│   └── tests/                   90 tests
+│   └── tests/                   91 tests
 └── frontend/
     ├── next.config.ts           /api/* → FastAPI rewrite
     ├── src/proxy.ts             redirects to /login when there's no session cookie
@@ -150,7 +150,7 @@ All endpoints are under `/api`. Interactive docs: `http://localhost:8000/docs`.
 | POST | `/hosted-zones` | `201`; `409 HOSTED_ZONE_ALREADY_EXISTS`; `422` invalid domain / missing VPC |
 | GET · PATCH · DELETE | `/hosted-zones/{id}` | PATCH edits the description only; DELETE needs `?force=true` if the zone has records, else `409 HOSTED_ZONE_NOT_EMPTY` |
 | GET | `/hosted-zones/{id}/export` | `?format=json\|bind`, as a download |
-| GET | `/hosted-zones/{id}/records` | `page`, `page_size`, `search` (name or value), `type`, `routing_policy` |
+| GET | `/hosted-zones/{id}/records` | `page`, `page_size`, `search` (name or value), `type`, `routing_policy`, `alias` |
 | POST | `/hosted-zones/{id}/records` | `201`; `409` duplicate / CNAME conflict / routing-policy conflict; `422` invalid value |
 | POST | `/hosted-zones/{id}/records/batch-delete` | `{ "ids": [...] }`, all-or-nothing |
 | POST | `/hosted-zones/{id}/records/import` | `{ "content": "<BIND text>" }` → `{ created, skipped: [{line, reason}] }` |
@@ -242,7 +242,7 @@ Nothing secret is committed: `.env*` is git-ignored except the `.env.example` fi
 ## Running the tests
 
 ```bash
-cd backend  && pytest                                     # 90 tests; ruff check . for lint
+cd backend  && pytest                                     # 91 tests; ruff check . for lint
 cd frontend && npm test && npm run lint && npm run typecheck && npm run build
 ```
 

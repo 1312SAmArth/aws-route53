@@ -1,0 +1,18 @@
+.info {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-link);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.info:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

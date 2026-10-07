@@ -245,3 +245,18 @@ def test_zone_record_count_tracks_changes(client, zone):
 def test_errors_never_leak_internals(client):
     r = client.get("/api/nonexistent")
     assert r.status_code == 404 and set(r.json()) == {"error"}
+
+
+def test_filter_by_alias_and_routing_policy(client, zone):
+    client.post(url(zone), json={"name": "cdn", "type": "A", "alias_target": "d1.cloudfront.net"})
+    client.post(url(zone), json={"name": "web", "type": "A", "values": ["1.1.1.1"]})
+    weighted_body = {"name": "w", "type": "A", "values": ["2.2.2.2"], "routing_policy": "WEIGHTED", "set_identifier": "a", "weight": 5}
+    client.post(url(zone), json=weighted_body)
+
+    aliases = client.get(url(zone), params={"alias": "true"}).json()
+    assert [r["name"] for r in aliases["items"]] == ["cdn.example.com."]
+    standard = client.get(url(zone), params={"alias": "false", "type": "A"}).json()
+    assert {r["name"] for r in standard["items"]} == {"web.example.com.", "w.example.com."}
+    weighted = client.get(url(zone), params={"routing_policy": "WEIGHTED"}).json()
+    assert weighted["total"] == 1
+    assert client.get(url(zone), params={"alias": "maybe"}).status_code == 422

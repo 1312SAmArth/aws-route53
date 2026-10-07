@@ -21,6 +21,10 @@
   line-height: 24px;
   font-weight: 700;
 }
+.info {
+  margin-left: 10px;
+  vertical-align: middle;
+}
 .count {
   font-weight: 400;
   color: var(--color-text-muted);

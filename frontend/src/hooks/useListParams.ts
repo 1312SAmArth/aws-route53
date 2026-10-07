@@ -7,6 +7,8 @@ export interface ListState {
   page: number;
   search: string;
   type: string;
+  policy: string;
+  alias: string;
 }
 
 /**
@@ -23,6 +25,8 @@ export function useListParams(): [ListState, (patch: Partial<ListState>) => void
     page: Number.isInteger(rawPage) && rawPage >= 1 ? rawPage : 1,
     search: searchParams.get("q") ?? "",
     type: searchParams.get("type") ?? "",
+    policy: searchParams.get("policy") ?? "",
+    alias: searchParams.get("alias") ?? "",
   };
 
   const current = searchParams.toString();
@@ -36,9 +40,12 @@ export function useListParams(): [ListState, (patch: Partial<ListState>) => void
       };
       set("q", patch.search, "");
       set("type", patch.type, "");
+      set("policy", patch.policy, "");
+      set("alias", patch.alias, "");
       set("page", patch.page, 1);
       // Changing a filter always returns to the first page.
-      if ((patch.search !== undefined || patch.type !== undefined) && patch.page === undefined) next.delete("page");
+      const filterChanged = ["search", "type", "policy", "alias"].some((k) => patch[k as keyof ListState] !== undefined);
+      if (filterChanged && patch.page === undefined) next.delete("page");
       const qs = next.toString();
       router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
     },

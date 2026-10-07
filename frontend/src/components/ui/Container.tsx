@@ -12,20 +12,26 @@ interface ContainerProps {
   flush?: boolean;
   as?: "section" | "div";
   id?: string;
+  /** Rendered after the title and count, e.g. an <InfoLink>. */
+  info?: ReactNode;
+  /** Use 1 when the container is the page's main heading. */
+  headingLevel?: 1 | 2;
 }
 
 /** White bordered panel with an optional header, the basic building block of the console layout. */
-export function Container({ title, count, description, actions, children, flush, as: Tag = "section", id }: ContainerProps) {
+export function Container({ title, count, description, actions, children, flush, as: Tag = "section", id, info, headingLevel = 2 }: ContainerProps) {
+  const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
     <Tag className={styles.container} aria-labelledby={title && id ? `${id}-title` : undefined}>
       {(title || actions) && (
         <div className={styles.header}>
           <div className={styles.headerText}>
             {title && (
-              <h2 className={styles.title} id={id ? `${id}-title` : undefined}>
+              <Heading className={styles.title} id={id ? `${id}-title` : undefined}>
                 {title}
                 {count !== undefined && <span className={styles.count}> ({count})</span>}
-              </h2>
+                {info && <span className={styles.info}>{info}</span>}
+              </Heading>
             )}
             {description && <p className={styles.description}>{description}</p>}
           </div>

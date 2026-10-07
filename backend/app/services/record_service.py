@@ -129,6 +129,7 @@ def list_records(
     search: str | None,
     record_type: str | None,
     routing_policy: str | None,
+    alias: bool | None = None,
 ) -> tuple[list[DnsRecord], int]:
     get_zone_model(db, zone_id)
     stmt = select(DnsRecord).where(DnsRecord.hosted_zone_id == zone_id)
@@ -143,6 +144,8 @@ def list_records(
         stmt = stmt.where(DnsRecord.type == record_type.upper())
     if routing_policy:
         stmt = stmt.where(DnsRecord.routing_policy == routing_policy)
+    if alias is not None:
+        stmt = stmt.where(DnsRecord.alias_target.is_not(None) if alias else DnsRecord.alias_target.is_(None))
     total = db.scalar(select(func.count()).select_from(stmt.subquery())) or 0
     stmt = stmt.order_by(DnsRecord.name, DnsRecord.type, DnsRecord.set_identifier).offset((page - 1) * page_size).limit(page_size)
     return list(db.scalars(stmt)), total

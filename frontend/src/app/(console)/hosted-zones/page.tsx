@@ -14,7 +14,7 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { Select } from "@/components/ui/Inputs";
 import { EmptyState, ErrorState } from "@/components/ui/States";
 import { ZoneTypeBadge } from "@/components/ui/Badge";
-import { PageHeader } from "@/components/ui/PageHeader";
+import { InfoLink } from "@/components/ui/InfoLink";
 import { useFlash } from "@/context/FlashContext";
 import { useListParams } from "@/hooks/useListParams";
 import { useDeleteZone, useZones } from "@/hooks/useZones";
@@ -117,14 +117,17 @@ export default function HostedZonesPage() {
   return (
     <>
       <Breadcrumbs items={[{ label: "Hosted zones" }]} />
-      <PageHeader
-        title="Hosted zones"
-        description="A hosted zone is a container for records, and records contain information about how you want to route traffic for a specific domain, such as example.com, and its subdomains."
-      />
       <Container
         id="zones"
         title="Hosted zones"
+        headingLevel={1}
         count={zones.data ? total : undefined}
+        info={
+          <InfoLink title="Hosted zones">
+            <p>A hosted zone is a container for records, and records contain information about how you want to route traffic for a specific domain, such as example.com, and its subdomains.</p>
+            <p>Select a hosted zone and choose View details to manage its records, or choose Create hosted zone to add a domain.</p>
+          </InfoLink>
+        }
         actions={
           <>
             <Button variant="icon" icon="refresh" aria-label="Refresh hosted zones" onClick={() => zones.refetch()} disabled={zones.isFetching} />

@@ -20,9 +20,10 @@ def list_records(
     search: Annotated[str | None, Query(max_length=100)] = None,
     type: Annotated[str | None, Query(max_length=8)] = None,
     routing_policy: RoutingPolicy | None = None,
+    alias: bool | None = None,
 ) -> Page[RecordOut]:
     items, total = records.list_records(
-        db, zone_id, page=page, page_size=page_size, search=search, record_type=type, routing_policy=routing_policy
+        db, zone_id, page=page, page_size=page_size, search=search, record_type=type, routing_policy=routing_policy, alias=alias
     )
     return Page(items=[RecordOut.model_validate(r) for r in items], total=total, page=page, page_size=page_size)
 
