@@ -1,0 +1,71 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 900px;
+}
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.summary:empty {
+  display: none;
+}
+.summary:focus {
+  outline: none;
+}
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.legend {
+  padding: 0;
+  font-weight: 700;
+}
+.help {
+  margin: 4px 0 8px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.vpc {
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg-subtle);
+}
+.vpcTitle {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}

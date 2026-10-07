@@ -1,0 +1,78 @@
+.control {
+  width: 100%;
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius);
+  background: var(--color-bg-surface);
+  color: var(--color-text-body);
+}
+.control::placeholder {
+  color: var(--color-text-disabled);
+}
+.control:hover:not(:disabled) {
+  border-color: var(--color-text-body);
+}
+.control:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 0;
+  border-color: var(--color-focus);
+}
+.control:disabled,
+.control[readonly] {
+  background: var(--color-bg-input-disabled);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  border-color: var(--color-border);
+}
+.control[aria-invalid="true"] {
+  border-color: var(--color-error);
+  border-left-width: 4px;
+}
+.textarea {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 20px;
+}
+
+.selectWrap {
+  position: relative;
+  display: block;
+}
+.select {
+  appearance: none;
+  padding-right: 28px;
+  cursor: pointer;
+}
+.selectIcon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--color-text-muted);
+}
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+.choiceInput {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--color-link);
+  cursor: pointer;
+}
+.choiceLabel {
+  display: block;
+}
+.choiceDescription {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}

@@ -1,0 +1,18 @@
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.panel {
+  padding-top: 12px;
+}
+.panel[hidden] {
+  display: none;
+}

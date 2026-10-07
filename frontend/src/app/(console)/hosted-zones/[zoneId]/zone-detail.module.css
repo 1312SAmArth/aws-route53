@@ -1,0 +1,8 @@
+.servers {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.servers li {
+  padding: 1px 0;
+}

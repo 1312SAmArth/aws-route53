@@ -1,0 +1,15 @@
+.copy {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  vertical-align: middle;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius);
+}
+.copy:hover {
+  color: var(--color-link);
+  background: var(--color-bg-hover);
+}

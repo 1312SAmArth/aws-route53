@@ -1,0 +1,50 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.icon {
+  position: absolute;
+  left: 8px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+.input {
+  width: 100%;
+  min-height: 32px;
+  padding: 4px 28px 4px 30px;
+  border: 1px solid var(--color-border-input);
+  border-radius: 16px;
+  background: var(--color-bg-surface);
+  appearance: none;
+}
+.input::-webkit-search-cancel-button {
+  display: none;
+}
+.input::placeholder {
+  color: var(--color-text-disabled);
+}
+.input:hover {
+  border-color: var(--color-text-body);
+}
+.input:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 0;
+  border-color: var(--color-focus);
+}
+.clear {
+  position: absolute;
+  right: 6px;
+  display: inline-flex;
+  padding: 3px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: 50%;
+}
+.clear:hover {
+  color: var(--color-text-body);
+  background: var(--color-bg-hover);
+}

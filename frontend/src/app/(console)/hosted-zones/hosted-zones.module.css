@@ -1,0 +1,34 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-border-divider);
+}
+.search {
+  flex: 1 1 280px;
+  max-width: 480px;
+}
+.typeFilter {
+  flex: 0 0 160px;
+}
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+.range {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+.muted {
+  color: var(--color-text-disabled);
+}
+.idCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}

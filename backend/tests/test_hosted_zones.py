@@ -113,3 +113,10 @@ def test_delete_zone_with_records_requires_force_and_leaves_no_orphans(client, z
 
 def test_delete_missing_zone_is_404(client):
     assert client.delete("/api/hosted-zones/ZNOPE").status_code == 404
+
+
+def test_timestamps_are_explicit_utc(client, zone):
+    # SQLite stores naive datetimes; without an offset the browser would read them as local time.
+    assert zone["created_at"].endswith(("Z", "+00:00"))
+    rec = client.post(f"/api/hosted-zones/{zone['id']}/records", json={"name": "t", "type": "A", "values": ["1.1.1.1"]}).json()
+    assert rec["updated_at"].endswith(("Z", "+00:00"))

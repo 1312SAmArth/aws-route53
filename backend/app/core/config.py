@@ -2,6 +2,8 @@ from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+DEFAULT_DEMO_PASSWORD = "Route53Demo!"  # local-development default only; deployments must override it
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
@@ -11,7 +13,7 @@ class Settings(BaseSettings):
     session_ttl_hours: int = 12
     cookie_secure: bool = False
     demo_username: str = "admin"
-    demo_password: str = "Route53Demo!"
+    demo_password: str = DEFAULT_DEMO_PASSWORD
     seed_on_startup: bool = True
 
     @property

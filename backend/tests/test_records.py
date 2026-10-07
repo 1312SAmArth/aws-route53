@@ -66,7 +66,8 @@ def test_name_resolution(client, zone):
     for raw in ["@", "", "example.com", "example.com."]:
         r = client.post(url(zone), json={"name": raw, "type": "TXT", "values": [f"apex {raw}"]})
         assert r.status_code in (201, 409)
-    assert client.post(url(zone), json={"name": "other.org", "type": "A", "values": ["1.1.1.1"]}).status_code == 201  # relative: other.org.example.com.
+    # A name that doesn't end in the zone is relative to it: this creates other.org.example.com.
+    assert client.post(url(zone), json={"name": "other.org", "type": "A", "values": ["1.1.1.1"]}).status_code == 201
     r = client.post(url(zone), json={"name": "evil.other.org.", "type": "A", "values": ["1.1.1.1"]})
     assert r.status_code == 422 and r.json()["error"]["details"][0]["field"] == "name"
     assert client.post(url(zone), json={"name": "*.wild", "type": "A", "values": ["1.1.1.1"]}).status_code == 201

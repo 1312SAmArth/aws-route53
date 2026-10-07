@@ -1,0 +1,26 @@
+.nav {
+  font-size: 14px;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.current {
+  color: var(--color-text-muted);
+  overflow-wrap: anywhere;
+}
+.sep {
+  color: var(--color-text-muted);
+  flex: none;
+}

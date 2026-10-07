@@ -1,0 +1,26 @@
+.list {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--color-border);
+}
+.tab {
+  padding: 10px 16px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tab:hover {
+  color: var(--color-text-body);
+}
+.active {
+  color: var(--color-link);
+  border-bottom-color: var(--color-link);
+}
+.panel {
+  padding-top: 16px;
+}

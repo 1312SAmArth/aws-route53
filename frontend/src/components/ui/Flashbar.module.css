@@ -1,0 +1,8 @@
+.flashbar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.flashbar:empty {
+  display: none;
+}

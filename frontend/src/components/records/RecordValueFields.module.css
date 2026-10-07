@@ -1,0 +1,52 @@
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.legend {
+  padding: 0;
+  font-weight: 700;
+}
+.help {
+  margin: 4px 0 8px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.headerRow,
+.row {
+  display: grid;
+  gap: 8px;
+  align-items: center;
+}
+.headerRow {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+.rowWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.error {
+  color: var(--color-error);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .headerRow {
+    display: none;
+  }
+  .row {
+    grid-template-columns: 1fr 1fr 32px !important;
+  }
+}

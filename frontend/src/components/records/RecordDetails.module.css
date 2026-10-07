@@ -1,0 +1,9 @@
+.values {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.values li {
+  padding: 1px 0;
+  overflow-wrap: anywhere;
+}

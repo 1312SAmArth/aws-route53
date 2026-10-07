@@ -1,7 +1,8 @@
-from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
+
+from app.schemas.common import UtcDatetime
 
 ZoneType = Literal["PUBLIC", "PRIVATE"]
 
@@ -32,5 +33,5 @@ class HostedZoneOut(BaseModel):
     created_by: str
     record_count: int
     name_servers: list[str]
-    created_at: datetime
-    updated_at: datetime
+    created_at: UtcDatetime
+    updated_at: UtcDatetime

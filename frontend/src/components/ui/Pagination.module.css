@@ -1,0 +1,37 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.item {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+.item:hover:not(:disabled):not(.current) {
+  background: var(--color-bg-hover);
+  color: var(--color-text-body);
+}
+.item:disabled {
+  color: var(--color-border-strong);
+  cursor: not-allowed;
+}
+.current {
+  background: var(--color-link);
+  color: #fff;
+  font-weight: 700;
+  cursor: default;
+}
+.gap {
+  min-width: 20px;
+  text-align: center;
+  color: var(--color-text-muted);
+}

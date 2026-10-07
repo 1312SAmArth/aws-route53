@@ -1,0 +1,11 @@
+.full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+.full > * {
+  width: 100%;
+  max-width: 560px;
+}

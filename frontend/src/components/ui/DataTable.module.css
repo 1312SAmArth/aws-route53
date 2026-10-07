@@ -1,0 +1,70 @@
+.scroller {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+.th {
+  position: sticky;
+  top: 0;
+  padding: 8px 16px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  background: var(--color-bg-subtle);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.cell {
+  padding: 8px 16px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-border-divider);
+  overflow-wrap: anywhere;
+}
+tbody tr:hover {
+  background: var(--color-bg-hover);
+}
+tbody tr.selected {
+  background: var(--color-bg-selected);
+  box-shadow: inset 3px 0 0 var(--color-link);
+}
+.selectCell {
+  width: 40px;
+  padding-right: 0;
+}
+.check {
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--color-link);
+  cursor: pointer;
+}
+.right {
+  text-align: right;
+}
+.message {
+  padding: 32px 16px;
+  text-align: center;
+  border-bottom: 0;
+}
+.skeleton {
+  display: block;
+  height: 12px;
+  margin: 4px 0;
+  border-radius: 4px;
+  background: var(--color-border-divider);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

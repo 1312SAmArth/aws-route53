@@ -1,7 +1,8 @@
-from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from app.schemas.common import UtcDatetime
 
 RoutingPolicy = Literal["SIMPLE", "WEIGHTED"]
 
@@ -54,8 +55,8 @@ class RecordOut(BaseModel):
     evaluate_target_health: bool
     comment: str | None
     is_system: bool
-    created_at: datetime
-    updated_at: datetime
+    created_at: UtcDatetime
+    updated_at: UtcDatetime
 
     @field_validator("set_identifier", mode="before")
     @classmethod
@@ -67,3 +68,19 @@ class BatchDeleteRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     ids: list[int] = Field(min_length=1, max_length=100)
+
+
+class ImportRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    content: str = Field(min_length=1)
+
+
+class ImportSkipped(BaseModel):
+    line: int
+    reason: str
+
+
+class ImportResultOut(BaseModel):
+    created: int
+    skipped: list[ImportSkipped]

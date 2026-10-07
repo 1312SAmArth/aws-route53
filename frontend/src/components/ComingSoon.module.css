@@ -1,0 +1,48 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 16px;
+  text-align: center;
+}
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 8px;
+  border-radius: 50%;
+  background: var(--color-info-bg);
+  color: var(--color-link);
+}
+.heading {
+  font-size: 18px;
+  line-height: 24px;
+}
+.text {
+  max-width: 520px;
+  color: var(--color-text-muted);
+}
+.list {
+  margin: 4px 0 16px;
+  padding: 0;
+  list-style: none;
+  max-width: 520px;
+  text-align: left;
+}
+.list li {
+  position: relative;
+  padding: 3px 0 3px 18px;
+}
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-border-strong);
+}

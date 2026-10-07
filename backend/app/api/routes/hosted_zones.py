@@ -1,3 +1,4 @@
+import json
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, Query, Response, status
@@ -6,6 +7,7 @@ from app.api.deps import DbSession, get_current_user
 from app.schemas.common import Page
 from app.schemas.hosted_zone import HostedZoneCreate, HostedZoneOut, HostedZoneUpdate, ZoneType
 from app.services import hosted_zone_service as zones
+from app.services import zone_file_service
 
 router = APIRouter(prefix="/hosted-zones", tags=["hosted zones"], dependencies=[Depends(get_current_user)])
 
@@ -43,3 +45,14 @@ def update_hosted_zone(zone_id: str, body: HostedZoneUpdate, db: DbSession) -> H
 def delete_hosted_zone(zone_id: str, db: DbSession, force: bool = False) -> Response:
     zones.delete_zone(db, zone_id, force=force)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.get("/{zone_id}/export")
+def export_hosted_zone(zone_id: str, db: DbSession, format: Literal["json", "bind"] = "json") -> Response:
+    zone, recs = zone_file_service.load_records(db, zone_id)
+    filename = zone.name.rstrip(".")
+    if format == "bind":
+        body, media_type, extension = zone_file_service.export_bind(zone, recs), "text/plain", "zone"
+    else:
+        body, media_type, extension = json.dumps(zone_file_service.export_json(zone, recs), indent=2), "application/json", "json"
+    return Response(body, media_type=media_type, headers={"Content-Disposition": f'attachment; filename="{filename}.{extension}"'})

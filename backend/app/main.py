@@ -1,10 +1,11 @@
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import auth, hosted_zones, records
-from app.core.config import get_settings
+from app.core.config import DEFAULT_DEMO_PASSWORD, get_settings
 from app.core.errors import register_error_handlers
 from app.db.base import Base
 from app.db.seed import seed_if_empty
@@ -13,8 +14,11 @@ from app.db.session import SessionLocal, engine
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
+    settings = get_settings()
+    if settings.cookie_secure and settings.demo_password == DEFAULT_DEMO_PASSWORD:
+        logging.getLogger("app").warning("COOKIE_SECURE is on but DEMO_PASSWORD is still the public default; set DEMO_PASSWORD.")
     Base.metadata.create_all(engine)
-    if get_settings().seed_on_startup:
+    if settings.seed_on_startup:
         with SessionLocal() as db:
             seed_if_empty(db)
     yield

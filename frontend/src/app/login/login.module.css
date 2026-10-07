@@ -1,0 +1,53 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  min-height: 100vh;
+  padding: 64px 16px 32px;
+  background: var(--color-bg-page);
+}
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.logo {
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--color-bg-header);
+}
+.service {
+  color: var(--color-text-muted);
+  font-size: 16px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 400px;
+  padding: 28px 28px 24px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-container);
+}
+.heading {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 400;
+}
+.submit {
+  width: 100%;
+}
+.note {
+  max-width: 400px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 16px;
+}
