@@ -32,19 +32,39 @@
   color: var(--color-text-muted);
 }
 .section {
-  margin: 0;
   padding: 8px 0;
-  list-style: none;
   border-bottom: 1px solid var(--color-border-divider);
 }
 .section:last-child {
   border-bottom: 0;
 }
-.heading {
-  padding: 6px 20px 2px;
-  font-size: 12px;
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.list[hidden] {
+  display: none;
+}
+.groupToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 20px 7px 24px;
+  border: 0;
+  border-left: 4px solid transparent;
+  background: transparent;
+  text-align: left;
   font-weight: 700;
-  color: var(--color-text-muted);
+  cursor: pointer;
+}
+.groupToggle:hover {
+  color: var(--color-link-hover);
+  background: var(--color-bg-hover);
+}
+.nested {
+  padding-left: 46px;
 }
 .link {
   display: flex;

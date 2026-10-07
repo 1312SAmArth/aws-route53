@@ -34,7 +34,7 @@ export function useKeyboardShortcuts(onHelp: () => void) {
       if (document.querySelector('[role="dialog"]')) return;
 
       if (event.key === "/") {
-        const filter = document.querySelector<HTMLInputElement>('input[type="search"]');
+        const filter = document.querySelector<HTMLInputElement>('main input[type="search"]');
         if (filter) {
           event.preventDefault();
           filter.focus();

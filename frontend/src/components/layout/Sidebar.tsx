@@ -2,42 +2,54 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Icon, type IconName } from "@/components/ui/Icon";
+import { useState } from "react";
+import { Icon } from "@/components/ui/Icon";
+import { NAV_SECTIONS, isActive, type NavSection } from "./nav";
 import styles from "./Sidebar.module.css";
-
-interface NavItem {
-  href: string;
-  label: string;
-  icon: IconName;
-}
-
-interface NavSection {
-  heading?: string;
-  items: NavItem[];
-}
-
-const SECTIONS: NavSection[] = [
-  { items: [{ href: "/dashboard", label: "Dashboard", icon: "dashboard" }] },
-  {
-    items: [
-      { href: "/hosted-zones", label: "Hosted zones", icon: "zones" },
-      { href: "/health-checks", label: "Health checks", icon: "health" },
-    ],
-  },
-  { heading: "Traffic flow", items: [{ href: "/traffic-policies", label: "Traffic policies", icon: "traffic" }] },
-  {
-    items: [
-      { href: "/resolver", label: "Resolver", icon: "resolver" },
-      { href: "/profiles", label: "Profiles", icon: "profiles" },
-    ],
-  },
-];
 
 interface SidebarProps {
   collapsed: boolean;
   drawerOpen: boolean;
   onNavigate: () => void;
   onCloseDrawer: () => void;
+}
+
+function Group({ section, pathname, onNavigate }: { section: NavSection; pathname: string; onNavigate: () => void }) {
+  const hasActive = section.items.some((i) => isActive(pathname, i.href));
+  const [open, setOpen] = useState(true);
+  const expanded = open || hasActive;
+
+  const links = (
+    <ul className={styles.list} hidden={!expanded}>
+      {section.items.map((item) => {
+        const active = isActive(pathname, item.href);
+        return (
+          <li key={item.href}>
+            <Link
+              href={item.href}
+              className={`${styles.link} ${section.heading ? styles.nested : ""} ${active ? styles.active : ""}`}
+              aria-current={active ? "page" : undefined}
+              onClick={onNavigate}
+            >
+              {!section.heading && <Icon name={item.icon} />}
+              {item.label}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+
+  if (!section.heading) return <div className={styles.section}>{links}</div>;
+  return (
+    <div className={styles.section}>
+      <button type="button" className={styles.groupToggle} aria-expanded={expanded} onClick={() => setOpen((v) => !v)}>
+        <Icon name={expanded ? "chevronDown" : "chevronRight"} size={14} />
+        {section.heading}
+      </button>
+      {links}
+    </div>
+  );
 }
 
 export function Sidebar({ collapsed, drawerOpen, onNavigate, onCloseDrawer }: SidebarProps) {
@@ -57,26 +69,8 @@ export function Sidebar({ collapsed, drawerOpen, onNavigate, onCloseDrawer }: Si
           </button>
         </div>
         <nav>
-          {SECTIONS.map((section, i) => (
-            <ul key={i} className={styles.section} aria-label={section.heading}>
-              {section.heading && <li className={styles.heading}>{section.heading}</li>}
-              {section.items.map((item) => {
-                const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className={`${styles.link} ${active ? styles.active : ""}`}
-                      aria-current={active ? "page" : undefined}
-                      onClick={onNavigate}
-                    >
-                      <Icon name={item.icon} />
-                      {item.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+          {NAV_SECTIONS.map((section, i) => (
+            <Group key={i} section={section} pathname={pathname} onNavigate={onNavigate} />
           ))}
         </nav>
       </aside>
