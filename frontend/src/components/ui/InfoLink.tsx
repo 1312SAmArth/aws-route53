@@ -5,7 +5,6 @@ import { Button } from "./Button";
 import { Modal } from "./Modal";
 import styles from "./InfoLink.module.css";
 
-/** The console's blue "Info" link next to a heading; opens a short help dialog. */
 export function InfoLink({ title, children }: { title: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   return (

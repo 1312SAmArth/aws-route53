@@ -11,7 +11,6 @@ export class ApiError extends Error {
     this.name = "ApiError";
   }
 
-  /** Server-side validation messages keyed by field name, for inline display. */
   get fieldErrors(): Record<string, string> {
     const out: Record<string, string> = {};
     for (const d of this.details) out[d.field] ??= d.message;
@@ -42,7 +41,6 @@ interface RequestOptions {
 
 const SESSION_EXPIRED_EVENT = "r53:session-expired";
 
-/** Fired when any non-login request comes back 401, so the shell can redirect to /login. */
 export function onSessionExpired(handler: () => void): () => void {
   window.addEventListener(SESSION_EXPIRED_EVENT, handler);
   return () => window.removeEventListener(SESSION_EXPIRED_EVENT, handler);

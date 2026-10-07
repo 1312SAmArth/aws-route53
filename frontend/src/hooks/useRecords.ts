@@ -32,7 +32,6 @@ export function useRecord(recordId: number) {
   });
 }
 
-/** Records feed the zone's record count too, so every record write refreshes zone data. */
 function useInvalidateAfterRecordWrite(zoneId: string) {
   const queryClient = useQueryClient();
   return () =>

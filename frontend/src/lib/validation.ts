@@ -37,7 +37,6 @@ export function validateHostname(value: string): string | null {
   return checkLabels(value.trim(), RECORD_LABEL, false);
 }
 
-/** `name` is the relative part the user types; the zone suffix is appended by the server. */
 export function validateRecordName(name: string): string | null {
   const value = name.trim();
   if (value === "" || value === "@") return null;

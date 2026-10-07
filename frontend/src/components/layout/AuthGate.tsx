@@ -7,7 +7,6 @@ import { useSession } from "@/hooks/useAuth";
 import { ApiError, onSessionExpired } from "@/lib/api-client";
 import styles from "./AuthGate.module.css";
 
-/** Renders the console only for a valid server-side session; the proxy handles the cheap cookie check first. */
 export function AuthGate({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();

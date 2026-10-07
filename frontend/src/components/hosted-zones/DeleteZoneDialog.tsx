@@ -6,7 +6,7 @@ import { ApiError } from "@/lib/api-client";
 import { displayName, plural } from "@/lib/format";
 import type { HostedZone } from "@/lib/types";
 
-/** The apex NS and SOA records come with every zone, so only the rest count as the user's records. */
+// Every zone starts with an apex NS and SOA record; only the rest are the user's.
 const DEFAULT_RECORDS = 2;
 
 interface DeleteZoneDialogProps {

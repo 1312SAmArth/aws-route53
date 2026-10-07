@@ -7,7 +7,6 @@ import {
   validateIntInRange,
 } from "./validation";
 
-/** How a record type's value is edited: one value per line, or structured rows. */
 export type ValueKind = "lines" | "mx" | "srv" | "caa";
 
 export interface RecordTypeMeta {
@@ -173,11 +172,9 @@ const blank = (...parts: string[]) => parts.every((p) => p.trim() === "");
 
 export interface SerializedValues {
   values: string[];
-  /** For each serialized value, the index of the UI row (or line) it came from. */
   sourceIndex: number[];
 }
 
-/** Turn the editable draft into the API's wire format, skipping untouched rows. */
 export function serializeDraft(type: RecordType, draft: ValueDraft): SerializedValues {
   const values: string[] = [];
   const sourceIndex: number[] = [];
@@ -208,9 +205,7 @@ export function serializeDraft(type: RecordType, draft: ValueDraft): SerializedV
 }
 
 export interface DraftErrors {
-  /** Errors for structured rows, keyed by `${rowIndex}.${field}`. */
   rows: Record<string, string>;
-  /** Errors for the one-per-line textarea and for whole-field problems. */
   general: string[];
 }
 
@@ -267,7 +262,6 @@ export function validateDraft(type: RecordType, draft: ValueDraft): DraftErrors 
   return errors;
 }
 
-/** Spread backend `values.N` errors back onto the rows/lines the user edited. */
 export function mapServerValueErrors(
   type: RecordType,
   serialized: SerializedValues,

@@ -87,7 +87,6 @@ function RepeatableRows<T>({ rows, onRows, blank, addLabel, errors, disabled, re
   );
 }
 
-/** Renders the value inputs that match the selected record type. */
 export function RecordValueFields({ type, draft, errors, disabled, onChange }: Props) {
   const meta = RECORD_TYPE_META[type];
 

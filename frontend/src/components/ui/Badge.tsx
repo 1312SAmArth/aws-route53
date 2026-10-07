@@ -7,7 +7,6 @@ export function Badge({ tone = "grey", children }: { tone?: BadgeTone; children:
   return <span className={`${styles.badge} ${styles[tone]}`}>{children}</span>;
 }
 
-/** Route 53 shows public/private zones as plain text with an icon-less label; a subtle badge keeps it scannable. */
 export function ZoneTypeBadge({ type }: { type: "PUBLIC" | "PRIVATE" }) {
   return <Badge tone={type === "PUBLIC" ? "blue" : "grey"}>{type === "PUBLIC" ? "Public" : "Private"}</Badge>;
 }

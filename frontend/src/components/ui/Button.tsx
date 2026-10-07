@@ -46,12 +46,10 @@ export function Button({ variant = "normal", icon, loading, children, className,
 interface LinkButtonProps extends CommonProps {
   href: string;
   disabled?: boolean;
-  /** Plain anchor that downloads the response instead of navigating inside the app. */
   download?: boolean;
   "aria-label"?: string;
 }
 
-/** A navigation link styled like a button. A disabled one renders as inert text, not a dead link. */
 export function LinkButton({ variant = "normal", icon, children, className, href, disabled, download, ...rest }: LinkButtonProps) {
   if (disabled) {
     return (

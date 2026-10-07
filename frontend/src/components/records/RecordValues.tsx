@@ -4,7 +4,6 @@ import styles from "./RecordValues.module.css";
 
 const MAX_LINES = 4;
 
-/** Value column: one value per line, truncated with a tooltip, and "+N more" past a few lines. */
 export function RecordValues({ record }: { record: DnsRecord }) {
   if (record.alias_target) {
     return (

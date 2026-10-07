@@ -12,7 +12,6 @@ interface ModalProps {
   onClose: () => void;
   children: ReactNode;
   footer?: ReactNode;
-  /** Block Esc / backdrop dismissal while a request is in flight. */
   dismissible?: boolean;
 }
 

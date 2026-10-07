@@ -23,7 +23,6 @@ export default function EditRecordPage() {
   const updateRecord = useUpdateRecord(zoneId, id);
   const backHref = `/hosted-zones/${zoneId}`;
 
-  /** The default NS/SOA records only accept a TTL (and NS values); the API rejects anything else. */
   const toPatch = (input: RecordInput): Partial<RecordInput> =>
     record.data?.is_system ? { ttl: input.ttl, ...(record.data.type === "NS" ? { values: input.values } : {}) } : input;
 

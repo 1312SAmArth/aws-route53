@@ -11,14 +11,12 @@ interface FormFieldProps {
   id: string;
   label: string;
   description?: ReactNode;
-  /** Format hints shown under the control, e.g. "Maximum 256 characters". */
   constraint?: ReactNode;
   error?: string | null;
   optional?: boolean;
   children: (control: FieldControlProps) => ReactNode;
 }
 
-/** Wires label, description, constraint text and error message to a control via ids and aria attributes. */
 export function FormField({ id, label, description, constraint, error, optional, children }: FormFieldProps) {
   const describedBy = [description && `${id}-description`, constraint && `${id}-constraint`, error && `${id}-error`]
     .filter(Boolean)

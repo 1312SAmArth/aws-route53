@@ -13,7 +13,6 @@ interface ComingSoonProps {
   capabilities: string[];
 }
 
-/** Placeholder for console sections outside the assignment's core scope. */
 export function ComingSoon({ title, icon, description, capabilities }: ComingSoonProps) {
   return (
     <>

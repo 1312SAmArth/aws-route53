@@ -18,7 +18,6 @@ interface PopoverProps {
   children: (close: () => void) => ReactNode;
 }
 
-/** Dropdown wrapper that closes on outside click and Escape. */
 function Popover({ trigger, children }: PopoverProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);

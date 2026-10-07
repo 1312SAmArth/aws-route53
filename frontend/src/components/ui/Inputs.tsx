@@ -29,7 +29,6 @@ interface ChoiceProps {
   description?: ReactNode;
 }
 
-/** Native radio/checkbox with an AWS-style label block, so keyboard and screen-reader behaviour comes for free. */
 export function Choice({ type, label, description, className, ...rest }: ChoiceProps & Omit<InputHTMLAttributes<HTMLInputElement>, "type">) {
   return (
     <label className={cx(styles.choice, className)}>

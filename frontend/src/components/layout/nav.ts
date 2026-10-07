@@ -7,12 +7,10 @@ export interface NavItem {
 }
 
 export interface NavSection {
-  /** A heading makes the section a collapsible group, like "Traffic flow" in the console. */
   heading?: string;
   items: NavItem[];
 }
 
-/** Single source for the sidebar and the header's Services menu. */
 export const NAV_SECTIONS: NavSection[] = [
   { items: [{ href: "/dashboard", label: "Dashboard", icon: "dashboard" }] },
   {

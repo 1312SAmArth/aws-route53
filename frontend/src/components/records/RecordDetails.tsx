@@ -6,7 +6,6 @@ import { displayName, formatDateTime } from "@/lib/format";
 import type { DnsRecord, HostedZone } from "@/lib/types";
 import styles from "./RecordDetails.module.css";
 
-/** Shown under the table when exactly one record is selected, like the Route 53 details pane. */
 export function RecordDetails({ zone, record }: { zone: HostedZone; record: DnsRecord }) {
   const values = record.alias_target ? [record.alias_target] : record.values;
   return (

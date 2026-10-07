@@ -17,7 +17,6 @@ function isTypingTarget(target: EventTarget | null): boolean {
   return !!el && (el.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(el.tagName));
 }
 
-/** Where "c" should go from the current page, or null where there is nothing to create. */
 export function createTargetFor(pathname: string): string | null {
   if (pathname === "/hosted-zones") return "/hosted-zones/new";
   if (/^\/hosted-zones\/[^/]+$/.test(pathname) && pathname !== "/hosted-zones/new") return `${pathname}/records/new`;

@@ -15,7 +15,6 @@ interface DataTableProps<T> {
   columns: Column<T>[];
   rows: T[];
   getRowId: (row: T) => string;
-  /** Visually hidden table title for screen readers. */
   caption: string;
   selectionMode?: "none" | "single" | "multi";
   selectedIds?: string[];
@@ -23,9 +22,7 @@ interface DataTableProps<T> {
   isRowSelectable?: (row: T) => boolean;
   loading?: boolean;
   skeletonRows?: number;
-  /** Shown instead of the body when there are no rows (and not loading). */
   empty?: ReactNode;
-  /** Shown instead of the body on failure. */
   error?: ReactNode;
 }
 

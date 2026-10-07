@@ -20,8 +20,6 @@ MAX_IMPORT_BYTES = 256 * 1024
 MAX_IMPORT_RECORDS = 500
 
 
-# --------------------------------------------------------------------------- export
-
 
 def _relative(name: str, origin: str) -> str:
     if name == origin:
@@ -77,8 +75,6 @@ def load_records(db: Session, zone_id: str) -> tuple[HostedZone, list[DnsRecord]
     records = list(db.scalars(stmt))
     return zone, records
 
-
-# --------------------------------------------------------------------------- import
 
 _TOKEN = re.compile(r'"(?:[^"\\]|\\.)*"|[^\s"]+')
 

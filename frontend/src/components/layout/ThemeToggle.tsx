@@ -6,7 +6,7 @@ import styles from "./Header.module.css";
 
 const STORAGE_KEY = "r53-theme";
 
-/** Rendered inside the account menu, which only mounts after hydration, so reading the DOM here is safe. */
+// Only mounted inside the account menu (after hydration), so reading the DOM here is safe.
 export function ThemeToggle() {
   const [dark, setDark] = useState(() => document.documentElement.dataset.theme === "dark");
 

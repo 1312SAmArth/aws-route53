@@ -4,8 +4,7 @@ A functional clone of the AWS Route 53 console: manage **hosted zones** and **DN
 console-style UI backed by a real REST API and a real SQLite database. It doesn't resolve DNS; the goal is the
 console experience (navigation, tables, forms, modals, validation, search, pagination) with data that persists.
 
-> **Status:** runs locally and the production build passes. It is **not deployed anywhere yet**; deployment
-> configuration is included and the steps are in [Deployment](#deployment). Once deployed, put the URL here.
+> **Demo:** _add the hosted URL here after deploying_ (see [Deployment](#deployment)).
 
 ## Contents
 
@@ -173,7 +172,7 @@ The frontend mirrors these rules in `src/lib/validation.ts` for instant feedback
 
 ## Authentication
 
-Intentionally simple, as the brief allows mocking IAM. There's one seeded user (`DEMO_USERNAME` / `DEMO_PASSWORD`).
+The brief allows mocking IAM, so this is kept simple: one seeded user (`DEMO_USERNAME` / `DEMO_PASSWORD`).
 
 1. `POST /auth/login` checks the bcrypt hash (the same message for an unknown user and a wrong password), creates a random
    token, stores only its **SHA-256 hash** in the `sessions` table, and sets it in an **httpOnly, SameSite=Lax** cookie
@@ -265,7 +264,7 @@ a 1 GB persistent disk mounted at `/var/data` holding `route53.db`). Set `DEMO_P
 **2. Frontend on Vercel**: import the repo, set the **Root Directory to `frontend`**, and add the environment variable
 `BACKEND_URL=https://<your-render-service>.onrender.com` (and optionally `NEXT_PUBLIC_DEMO_HINT`). Deploy.
 
-Because Next.js proxies `/api`, no further cookie or CORS configuration is needed. Verify the build locally first:
+Next.js reads `BACKEND_URL` when it builds, so redeploy the frontend after changing it. Because Next.js proxies `/api`, no further cookie or CORS configuration is needed. Verify the build locally first:
 
 ```bash
 cd frontend && npm run build && npm start        # with the backend running

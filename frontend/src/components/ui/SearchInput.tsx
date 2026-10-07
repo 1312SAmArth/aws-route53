@@ -12,7 +12,6 @@ interface SearchInputProps {
   delayMs?: number;
 }
 
-/** Debounced filter box. `value` is the committed value (usually from the URL); typing commits after a short pause. */
 export function SearchInput({ value, onChange, placeholder, ariaLabel, delayMs = 300 }: SearchInputProps) {
   const [draft, setDraft] = useState(value);
   const [seen, setSeen] = useState(value);

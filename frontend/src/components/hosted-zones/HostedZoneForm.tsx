@@ -28,7 +28,6 @@ const REGIONS = [
 const COMMENT_MAX = 256;
 
 interface HostedZoneFormProps {
-  /** Present when editing; domain name and type are immutable, as in Route 53. */
   zone?: HostedZone;
   submitting: boolean;
   serverError: ApiError | null;

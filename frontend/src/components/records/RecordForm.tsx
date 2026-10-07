@@ -32,7 +32,6 @@ const TTL_PRESETS = [
 
 interface RecordFormProps {
   zone: HostedZone;
-  /** Present when editing an existing record. */
   record?: DnsRecord;
   submitting: boolean;
   serverError: ApiError | null;
@@ -42,7 +41,6 @@ interface RecordFormProps {
 
 type FieldErrors = Partial<Record<"name" | "ttl" | "alias" | "setId" | "weight", string>>;
 
-/** The part of the name the user types: everything before the zone suffix. */
 function relativeName(record: DnsRecord | undefined, zone: HostedZone): string {
   if (!record || record.name === zone.name) return "";
   return record.name.slice(0, -(zone.name.length + 1));

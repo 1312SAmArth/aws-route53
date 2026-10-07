@@ -9,7 +9,6 @@ import { useZone } from "@/hooks/useZones";
 import { ApiError } from "@/lib/api-client";
 import type { HostedZone } from "@/lib/types";
 
-/** Resolves a zone id from the URL into loading / not-found / error / ready, so each page only handles the happy path. */
 export function ZoneLoader({ zoneId, children }: { zoneId: string; children: (zone: HostedZone) => ReactNode }) {
   const zone = useZone(zoneId);
 

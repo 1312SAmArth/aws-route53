@@ -11,7 +11,6 @@ interface ConfirmDialogProps {
   title: string;
   children: ReactNode;
   confirmLabel?: string;
-  /** When set, the user must type this word before the confirm button enables (used for irreversible deletes). */
   requireText?: string;
   loading?: boolean;
   error?: string | null;

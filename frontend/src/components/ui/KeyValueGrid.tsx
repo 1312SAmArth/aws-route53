@@ -6,7 +6,6 @@ export interface KeyValueItem {
   value: ReactNode;
 }
 
-/** Read-only label/value layout used on detail panels. */
 export function KeyValueGrid({ items }: { items: KeyValueItem[] }) {
   return (
     <dl className={styles.grid}>

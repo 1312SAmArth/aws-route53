@@ -13,7 +13,6 @@ interface AlertProps {
   className?: string;
 }
 
-/** Inline status message. Errors use role="alert" so screen readers announce them immediately. */
 export function Alert({ type, header, children, action, onDismiss, className }: AlertProps) {
   return (
     <div className={[styles.alert, styles[type], className].filter(Boolean).join(" ")} role={type === "error" ? "alert" : "status"}>
