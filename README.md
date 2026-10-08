@@ -4,7 +4,8 @@ A functional clone of the AWS Route 53 console: manage **hosted zones** and **DN
 console-style UI backed by a real REST API and a real SQLite database. It doesn't resolve DNS; the goal is the
 console experience (navigation, tables, forms, modals, validation, search, pagination) with data that persists.
 
-> **Demo:** _add the hosted URL here after deploying_ (see [Deployment](#deployment)).
+> **Live demo:** <https://aws-route53-clone-pi-smoky.vercel.app>  
+> API: <https://route53-clone-api-7qzj.onrender.com/docs> (Render free plan: the first request after idle can take ~30–60 s, and the demo data resets whenever the service restarts). Sign-in credentials are provided separately.
 
 ## Contents
 
