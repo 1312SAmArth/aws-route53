@@ -6,7 +6,7 @@ console experience (navigation, tables, forms, modals, validation, search, pagin
 
 > **Live demo:** <https://aws-route53-clone-pi-smoky.vercel.app>
 >
-> **API docs:** <https://route53-clone-api-7qzj.onrender.com/docs> (Render free plan: the first request after idle can take ~30–60 s, and the demo data resets whenever the service restarts).
+> **API docs:** <https://route53-clone-api-vlgw.onrender.com/docs> (Render free plan: the first request after idle can take ~30–60 s, and the demo data resets whenever the service restarts).
 >
 > **Demo login:** username `admin` · password `Samarth1312`
 
