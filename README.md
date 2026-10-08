@@ -253,13 +253,13 @@ cd frontend && npm test && npm run lint && npm run typecheck && npm run build
 
 ## Deployment
 
-Both pieces are configured but **not yet deployed**. Recommended: backend on Render, frontend on Vercel.
+Backend on Render, frontend on Vercel (the live URLs are at the top of this README).
 
 **1. Backend on Render**: connect the repo and use the blueprint in `render.yaml` (Python service rooted at `backend/`, health check `/api/health`,
-a 1 GB persistent disk mounted at `/var/data` holding `route53.db`). Set `DEMO_PASSWORD` and `CORS_ORIGINS` (your Vercel URL) in the dashboard.
+free plan). Set `DEMO_PASSWORD` and `CORS_ORIGINS` (your Vercel URL) in the dashboard.
 
-> SQLite needs a disk that survives restarts, and Render offers persistent disks only on paid instances. On the free plan, remove the `disk:` block and
-> set `plan: free`; it works, but the database is wiped and re-seeded whenever the service restarts or spins down. Free instances also take ~30–60 s to wake up.
+> The blueprint uses Render's **free plan**, which has no persistent disk: the SQLite database is wiped and re-seeded whenever the service restarts or spins down,
+> and free instances take ~30–60 s to wake up. For durable data, use a paid plan, add a `disk:` block mounted at `/var/data`, and set `DATABASE_URL=sqlite:////var/data/route53.db`.
 
 **2. Frontend on Vercel**: import the repo, set the **Root Directory to `frontend`**, and add the environment variable
 `BACKEND_URL=https://<your-render-service>.onrender.com` (and optionally `NEXT_PUBLIC_DEMO_HINT`). Deploy.

@@ -1,27 +1,21 @@
 # Render blueprint for the FastAPI backend. The frontend is deployed separately on Vercel (see README).
 #
-# SQLite needs a disk that survives deploys and restarts, and Render only offers persistent disks on
-# paid instances. On the free plan, delete the `disk:` block and set `plan: free`: the app then runs
-# fine, but the database is recreated and re-seeded from scratch on every restart.
+# Free plan: no persistent disk, so SQLite lives on the instance filesystem and the database is recreated and
+# re-seeded on every restart. For durable data, switch to a paid plan and add a `disk:` block with DATABASE_URL
+# pointing at it (see README, Deployment).
 services:
   - type: web
     name: route53-clone-api
     runtime: python
     rootDir: backend
-    plan: starter
+    plan: free
     buildCommand: pip install -r requirements.txt
     # One worker on purpose: SQLite allows a single writer, and the app is tiny.
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/health
-    disk:
-      name: sqlite-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
-      - key: DATABASE_URL
-        value: sqlite:////var/data/route53.db
       - key: COOKIE_SECURE
         value: "true"
       # The browser talks to the Vercel origin and Next.js proxies /api, so CORS isn't exercised in production.
